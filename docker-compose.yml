@@ -1,0 +1,33 @@
+version: "3.3"
+services:
+  orchestrator:
+    build: ./ruby
+    image: orchestrator-ruby
+    links:
+      - webapi
+    environment:
+      API_URL: http://webapi
+    ports:
+      - '5000:80'
+
+  webapi:
+    build: ./python
+    image: api-python
+    environment:
+      REDIS_URL: redis://redis/
+    ports:
+      - '5001:80'
+    links:
+      - worker
+      - redis
+
+  worker:
+    build: ./nodejs
+    image: worker-nodejs
+    environment:
+      REDIS_URL: redis://redis/
+    links:
+      - redis
+
+  redis:
+    image: redis:latest

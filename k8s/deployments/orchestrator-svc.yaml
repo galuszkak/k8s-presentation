@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: orchestrator-ruby
+  labels:
+    name: orchestrator-ruby
+    role: orchestrator
+spec:
+  ports:
+  -
+    name: http
+    port: 80
+    targetPort: a-http
+    protocol: TCP
+  selector:
+    name: orchestrator-ruby
+    role: orchestrator

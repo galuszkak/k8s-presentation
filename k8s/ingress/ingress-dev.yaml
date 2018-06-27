@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: minikube-ingress
+  annotations:
+spec:
+  backend:
+    serviceName: orchestrator-ruby
+    servicePort: 80
+  rules:
+  - host: k8s-dreams-dev
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: orchestrator-ruby
+          servicePort: 80

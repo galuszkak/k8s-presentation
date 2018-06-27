@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orchestrator-configmap
+  namespace: dev
+data:
+  API_URL: http://api-python/

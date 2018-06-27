@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1beta1
+metadata:
+  name: worker
+  labels:
+    name: worker-nodejs
+    role: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: worker-nodejs
+      role: worker
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 10%
+      maxSurge: 10%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: worker-nodejs
+      labels:
+        name: worker-nodejs
+        role: worker
+    spec:
+      containers:
+      -
+        name: worker-nodejs
+        resources:
+          requests:
+            cpu: 40m
+            memory: 50Mi
+        image: worker-nodejs:latest
+        imagePullPolicy: Never
+        envFrom:
+        -
+          configMapRef:
+            name: worker-configmap
+        ports:
+        -
+          name: a-http
+          containerPort: 80

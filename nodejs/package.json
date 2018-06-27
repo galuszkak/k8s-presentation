@@ -1,0 +1,16 @@
+{
+  "name": "worker-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "app": "node app.js worker"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.15.1",
+    "redis": "^2.8.0",
+    "request": "^2.87.0"
+  }
+}

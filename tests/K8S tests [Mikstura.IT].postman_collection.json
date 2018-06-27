@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "9bdd6e3e-757d-4762-9110-4dee664accae",
+		"name": "K8S tests [Mikstura.IT]",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Healthcheck of service",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3492ebb1-7b04-4951-b135-8f27ffadffb6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"JSON Response\", function () {",
+							"    pm.response.to.have.jsonBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response has status field OK\", function () {",
+							"    pm.expect(pm.response.json().status).to.eql(\"OK\")",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{API_BASE}}/healthcheck",
+					"protocol": "http",
+					"host": [
+						"{{API_BASE}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Am I famous?",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "06d93c0a-ceb6-4ead-a35d-9e2cf4a2d384",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"JSON Response\", function () {",
+							"    pm.response.to.have.jsonBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response has job_id field\", function () {",
+							"    pm.expect(pm.response.json()).to.have.property('job_id');",
+							"    pm.environment.set(\"JOB_ID\", pm.response.json().job_id);",
+							"});",
+							"",
+							"function pausecomp(millis) {",
+							"  var date = new Date();",
+							"  var curDate = null;",
+							"  do { curDate = new Date(); }",
+							"  while(curDate-date < millis);",
+							"}",
+							"pausecomp(750)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{API_BASE}}/am-i-famous?person=Albert",
+					"protocol": "http",
+					"host": [
+						"{{API_BASE}}"
+					],
+					"path": [
+						"am-i-famous"
+					],
+					"query": [
+						{
+							"key": "person",
+							"value": "Albert"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6289ed3-35ad-46f6-b0bb-95267873ae37",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"JSON Response\", function () {",
+							"    pm.response.to.have.jsonBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response has search field available\", function () {",
+							"    pm.expect(pm.response.json()).to.have.property('search');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{API_BASE}}/result/{{JOB_ID}}",
+					"protocol": "http",
+					"host": [
+						"{{API_BASE}}"
+					],
+					"path": [
+						"result",
+						"{{JOB_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83f8c245-ee54-4852-b76e-2448ae338135",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{API_BASE}}/result/{{JOB_ID}}",
+					"protocol": "http",
+					"host": [
+						"{{API_BASE}}"
+					],
+					"path": [
+						"result",
+						"{{JOB_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete non-existing results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5008a35d-8235-40e6-a660-1c4e70b5f2dc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{API_BASE}}/result/{{JOB_ID}}",
+					"protocol": "http",
+					"host": [
+						"{{API_BASE}}"
+					],
+					"path": [
+						"result",
+						"{{JOB_ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

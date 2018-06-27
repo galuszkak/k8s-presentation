@@ -1,0 +1,54 @@
+kind: Deployment
+apiVersion: apps/v1beta1
+metadata:
+  name: orchestrator
+  labels:
+    name: orchestrator-ruby
+    role: orchestrator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: orchestrator-ruby
+      role: orchestrator
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 10%
+      maxSurge: 10%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: orchestrator-ruby
+      labels:
+        name: orchestrator-ruby
+        role: orchestrator
+    spec:
+      containers:
+      -
+        name: orchestrator-ruby
+        resources:
+          requests:
+            cpu: 40m
+            memory: 50Mi
+        image: orchestrator-ruby:latest
+        imagePullPolicy: Never
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 80
+          initialDelaySeconds: 15
+          failureThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 80
+          failureThreshold: 2
+          initialDelaySeconds: 15
+        envFrom:
+        -
+          configMapRef:
+            name: orchestrator-configmap
+        ports:
+        -
+          name: a-http
+          containerPort: 80

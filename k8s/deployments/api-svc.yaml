@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-python
+  labels:
+    name: api-python
+    role: api
+spec:
+  ports:
+  -
+    name: http
+    port: 80
+    targetPort: a-http
+    protocol: TCP
+  selector:
+    name: api-python
+    role: api

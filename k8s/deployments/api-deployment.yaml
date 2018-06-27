@@ -1,0 +1,54 @@
+kind: Deployment
+apiVersion: apps/v1beta1
+metadata:
+  name: api
+  labels:
+    name: api-python
+    role: api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: api-python
+      role: api
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 10%
+      maxSurge: 10%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: api-python
+      labels:
+        name: api-python
+        role: api
+    spec:
+      containers:
+      -
+        name: api-python
+        resources:
+          requests:
+            cpu: 40m
+            memory: 50Mi
+        image: api-python:latest
+        imagePullPolicy: Never
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 80
+          initialDelaySeconds: 15
+          failureThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 80
+          failureThreshold: 2
+          initialDelaySeconds: 15
+        envFrom:
+        -
+          configMapRef:
+            name: api-configmap
+        ports:
+        -
+          name: a-http
+          containerPort: 80

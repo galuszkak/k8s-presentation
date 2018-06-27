@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-configmap
+  namespace: staging
+data:
+  REDIS_URL: redis://redis-staging-master/
