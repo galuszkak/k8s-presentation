@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.7"
 services:
   orchestrator:
     build: ./ruby
@@ -6,7 +6,7 @@ services:
     links:
       - webapi
     environment:
-      API_URL: http://webapi
+      API_URL: http://webapi 
     ports:
       - '5000:80'
 

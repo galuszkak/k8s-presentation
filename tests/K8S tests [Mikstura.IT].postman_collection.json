@@ -38,7 +38,10 @@
 						"value": "application/json"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{API_BASE}}/healthcheck",
 					"protocol": "http",
@@ -58,7 +61,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "06d93c0a-ceb6-4ead-a35d-9e2cf4a2d384",
+						"id": "9a38a6df-1146-4ab8-9b9d-b023a9d875fd",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -75,13 +78,7 @@
 							"    pm.environment.set(\"JOB_ID\", pm.response.json().job_id);",
 							"});",
 							"",
-							"function pausecomp(millis) {",
-							"  var date = new Date();",
-							"  var curDate = null;",
-							"  do { curDate = new Date(); }",
-							"  while(curDate-date < millis);",
-							"}",
-							"pausecomp(750)"
+							""
 						]
 					}
 				}
@@ -94,7 +91,10 @@
 						"value": "application/json"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{API_BASE}}/am-i-famous?person=Albert",
 					"protocol": "http",
@@ -120,8 +120,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d6289ed3-35ad-46f6-b0bb-95267873ae37",
-						"type": "text/javascript",
+						"id": "3492ebb1-7b04-4951-b135-8f27ffadffb6",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -132,10 +131,11 @@
 							"    pm.response.to.be.json;",
 							"});",
 							"",
-							"pm.test(\"Response has search field available\", function () {",
-							"    pm.expect(pm.response.json()).to.have.property('search');",
+							"pm.test(\"Response has status field OK\", function () {",
+							"    pm.expect(pm.response.json().status).to.eql(\"OK\")",
 							"});"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -147,7 +147,10 @@
 						"value": "application/json"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{API_BASE}}/result/{{JOB_ID}}",
 					"protocol": "http",

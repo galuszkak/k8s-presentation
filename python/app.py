@@ -33,6 +33,7 @@ class ResultView(MethodView):
     def get(self, result_id):
         
         results = client.get(result_id)
+        print(results)
         if results:
             return jsonify(json.loads(results.decode('utf-8')))
         else:

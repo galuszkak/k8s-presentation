@@ -1,4 +1,4 @@
-FROM ruby:2.5.1
+FROM ruby:2.6.3
 
 LABEL author="Kamil Gałuszka <kamil@flyrlabs.com>"
 

@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: minikube-ingress
+  namespace: dev
   annotations:
 spec:
   backend:
@@ -14,4 +15,4 @@ spec:
       - path: /*
         backend:
           serviceName: orchestrator-ruby
-          servicePort: 80
+          servicePort: 80 
